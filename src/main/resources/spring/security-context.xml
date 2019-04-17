@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<security:http pattern="/**/*.css" security="none"/>
+	<security:http pattern="/**/*.js" security="none"/>
+	<security:http pattern="/resources/*" security="none"/>
+	
+	
+	<security:http auto-config="true" use-expressions="true">
+		<security:csrf disabled="true"/>
+		<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/member/**" access="hasAnyRole(ROLE_ADMIN,ROLE_USER)" />
+		<security:intercept-url pattern="/login" access="isAnonymous()" />
+		<security:intercept-url pattern="/index" access="permitAll" />
+		<security:intercept-url pattern="/**" access="permitAll" />
+		
+		<security:form-login  
+							username-parameter="id" 
+							password-parameter="pwd"
+							login-page="/login"
+							default-target-url="/index"
+							authentication-failure-url="/login?fail=ture"							
+							/>
+		<security:logout invalidate-session="true" logout-url="/logout" logout-success-url="/index" />					
+	</security:http> 
+
+	<!-- 테스트 안쓰고 로긴허용 -->	
+	<security:authentication-manager>
+	  <security:authentication-provider>
+	    <security:user-service>
+	      <security:user name="user" password="1111" authorities="ROLE_USER"/>
+	      <security:user name="admin" password="1111" authorities="ROLE_ADMIN"/>
+	    </security:user-service>
+	  </security:authentication-provider>
+	</security:authentication-manager>
+	
+	<!-- 
+	<bean id="loginSuccessHandler" class="com.eh.restapi.user.handler.LoginSuccessHandler">
+		<property name="defaultTargetUrl" value="/main" />
+		<property name="alwaysUseDefaultTargetUrl" value="true" />
+	</bean>
+	
+	<bean id="loginFailureHandler" class="com.eh.restapi.user.handler.LoginFailureHandler">
+		<property name="defaultFailureUrl" value="/index?status=fail" />
+	</bean>
+	
+	<bean id="userAuthService" class="com.eh.restapi.user.UserAuthService" />
+	
+	<bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+	 -->
+
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>/WEB-INF/messages/spring_security_messages</value>
+			</list>
+		</property>
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="cacheSeconds" value="5" />
+	</bean>
+	 
+</beans>

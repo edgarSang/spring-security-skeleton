@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn">
+
+	<!-- Appenders -->
+	<Appenders>
+		<Console name="console" target="SYSTEM_OUT">
+			<PatternLayout pattern="[%t] %d{HH:mm:ss} %5p [%t] - %m%n" />
+		</Console>
+	</Appenders>
+	
+	<!-- Application Loggers -->
+	<Loggers>
+		<Logger name="com.eh.restapi" level="DEBUG">
+			<AppenderRef ref="console" />
+		</Logger>
+		
+		<!-- 3rdparty Loggers -->
+		<Logger name="org.springframework.security" level="INFO" additivity="false">
+			<AppenderRef ref="console" />
+		</Logger>
+		<Logger name="org.springframework.core" level="INFO" additivity="false">
+			<AppenderRef ref="console" />
+		</Logger>
+		<Logger name="org.springframework.beans" level="INFO" additivity="false">
+			<AppenderRef ref="console" />
+		</Logger>
+		<Logger name="org.springframework.context" level="INFO" additivity="false">
+			<AppenderRef ref="console" />
+		</Logger>
+		<Logger name="org.springframework.web" level="INFO" additivity="false">
+			<AppenderRef ref="console" />
+		</Logger>
+		
+		<!-- Root Logger -->
+		<Root level="DEBUG">
+			<AppenderRef ref="console" />
+		</Root>
+	</Loggers>
+</Configuration>
