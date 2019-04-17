@@ -10,7 +10,7 @@
 	
 	<!-- Application Loggers -->
 	<Loggers>
-		<Logger name="com.eh.restapi" level="DEBUG">
+		<Logger name="com.eh.restapi" level="DEBUG" additivity="false">
 			<AppenderRef ref="console" />
 		</Logger>
 		
