@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
- 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -14,13 +16,14 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
- 
+
  
 public class UserJdbcDaoImpl extends JdbcDaoImpl {
 
+	private static final Logger logger = LoggerFactory.getLogger(UserJdbcDaoImpl.class);
+	
 	private static final String GET_USER_BY_NAME = "SELECT ID, PASSWORD, NAME FROM USER WHERE ID=?";
 	private static final String GET_ROLE_ID_BY_NAME = "SELECT AUTHORITY FROM USER_AUTHORITY WHERE USER_ID=?";
-	
 	
 	public UserJdbcDaoImpl() {
 		super();
@@ -49,7 +52,7 @@ public class UserJdbcDaoImpl extends JdbcDaoImpl {
 		if (getEnableAuthorities()) {
 		}
 		dbAuthsSet.addAll(loadUserAuthorities(user.getUsername()));
-
+		logger.debug("paswword:{}", user.getPassword());
 		if (getEnableGroups()) {
 			dbAuthsSet.addAll(loadGroupAuthorities(user.getUsername()));
 		}

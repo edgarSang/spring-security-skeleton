@@ -68,9 +68,9 @@ CREATE TABLE SECURED_RESOURCE_AUTHORITY
 );
 
 ---------------------------------------INSERT
-INSERT INTO USER( id, password, name) VALUES ('admin', '1111','바보');
+INSERT INTO USER( id, password, name) VALUES ('admin', '$2a$10$bXHjdBEIu3urSvxONi4s0.vTPAk3IbFjEk.WMUbcczcYaSibNbFhy','바보');
 
-INSERT INTO USER( id, password, name) VALUES ('user', '1111', '유저당');
+INSERT INTO USER( id, password, name) VALUES ('user', '$2a$10$bXHjdBEIu3urSvxONi4s0.vTPAk3IbFjEk.WMUbcczcYaSibNbFhy', '유저당');
 
 INSERT INTO AUTHORITY(AUTHORITY, AUTHORITY_NAME) VALUES ('ROLE_ADMIN', '어드민');
 
